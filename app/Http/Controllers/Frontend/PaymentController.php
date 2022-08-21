@@ -8,13 +8,17 @@ use App\Models\OrderTransaction;
 use App\Models\Product;
 use App\Models\ProductCoupon;
 use App\Models\User;
+use App\Notifications\Frontend\Customer\OrderCreatedNotification;
+use App\Notifications\Frontend\Customer\OrderThanksNotification;
 use App\Services\OmnipayService;
 use App\Services\OrderService;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Meneses\LaravelMpdf\Facades\LaravelMpdf as PDF;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
+
     public function checkout()
     {
         return view('frontend.checkout');
@@ -96,30 +100,25 @@ class PaymentController extends Controller
                 'shipping',
             ]);
 
-//            User::whereHas('roles', function($query) {
-//                $query->whereIn('name', ['admin', 'supervisor']);
-//            })->each(function ($admin, $key) use ($order) {
-//                $admin->notify(new OrderCreatedNotification($order));
-//            });
+            User::whereHas('roles', function($query) {
+                $query->whereIn('name', ['admin', 'supervisor']);
+            })->each(function ($admin, $key) use ($order) {
+                $admin->notify(new OrderCreatedNotification($order));
+            });
 
 
-//            $data = $order->toArray();
-//            $data['currency_symbol'] = $order->currency == 'USD' ? '$' : $order->currency;
-//            $pdf = PDF::loadView('layouts.invoice', $data);
-//            $saved_file = storage_path('app/pdf/files/' . $data['ref_id'] . '.pdf');
-//            $pdf->save($saved_file);
+            $data = $order->toArray();
+            $data['currency_symbol'] = $order->currency == 'USD' ? '$' : $order->currency;
+            $pdf = PDF::loadView('layouts.invoice', $data);
+            $saved_file = storage_path('app/pdf/files/' . $data['ref_id'] . '.pdf');
+            $pdf->save($saved_file);
 
-//            $customer = User::find($order->user_id);
-//            $customer->notify(new OrderThanksNotification($order, $saved_file));
+            $customer = User::find($order->user_id);
+            $customer->notify(new OrderThanksNotification($order, $saved_file));
 
 
             toast('Your recent payment is successful with reference code: ' . $response->getTransactionReference(), 'success');
             return redirect()->route('frontend.index');
-        }else
-        {
-            toast('Your payment is Failed' , 'error');
-            return redirect()->route('frontend.index');
-
         }
     }
 

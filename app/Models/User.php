@@ -51,6 +51,11 @@ class User extends Authenticatable implements MustVerifyEmail , JWTSubject
         ]
     ];
 
+    public function receivesBroadcastNotificationsOn(): string
+    {
+        return 'App.Models.User.' . $this->id;
+    }
+
     public function getFullNameAttribute(): string
     {
         return ucfirst($this->first_name) . ' ' . ucfirst($this->last_name);
@@ -79,7 +84,7 @@ class User extends Authenticatable implements MustVerifyEmail , JWTSubject
     public function userImage()
     {
 
-        return $this->user_image != '' ? asset('assets/users/'.$this->user_image) : asset('assets/users/avatar.svg');
+        return $this->user_image != '' ? $this->user_image : 'avatar.svg';
 
     }
 
@@ -95,5 +100,11 @@ class User extends Authenticatable implements MustVerifyEmail , JWTSubject
         return [];
     }
 
+##############################
+
+    public function products()
+    {
+        return $this->BelongsToMany(Product::class);
+    }
 
 }

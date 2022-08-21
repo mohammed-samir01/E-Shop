@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\CityController;
 use App\Http\Controllers\Backend\CountryController;
 use App\Http\Controllers\Backend\CustomerAddressController;
 use App\Http\Controllers\Backend\CustomerController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PaymentMethodController;
 use App\Http\Controllers\Backend\ProductCategoriesController;
 use App\Http\Controllers\Backend\ProductController;
@@ -14,10 +15,11 @@ use App\Http\Controllers\Backend\ShippingCompanyController;
 use App\Http\Controllers\Backend\StateController;
 use App\Http\Controllers\Backend\SupervisorController;
 use App\Http\Controllers\Backend\TagController;
+use App\Http\Controllers\Frontend\CustomerController as FrontendCustomerController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\PaymentController;
 use Illuminate\Support\Facades\Route;
-
+use Laravel\Socialite\Facades\Socialite;
 
 
 Route::get('/',[FrontendController::class ,'index'])->name('frontend.index');
@@ -30,12 +32,22 @@ Route::get('/wishlist',[FrontendController::class ,'wishlist'])->name('frontend.
 
 
 Route::group(['middleware' => ['roles', 'role:customer']], function () {
-        Route::get('/checkout',[FrontendController::class ,'checkout'])->name('frontend.checkout');
-        Route::post('/checkout/payment', [PaymentController::class, 'checkout_now'])->name('checkout.payment');
+        Route::get('/dashboard', [FrontendCustomerController::class, 'dashboard'])->name('customer.dashboard');
+        Route::get('/profile', [FrontendCustomerController::class, 'profile'])->name('customer.profile');
+        Route::patch('/profile', [FrontendCustomerController::class, 'update_profile'])->name('customer.update_profile');
+        Route::get('/profile/remove-image', [FrontendCustomerController::class, 'remove_profile_image'])->name('customer.remove_profile_image');
+        Route::get('/addresses', [FrontendCustomerController::class, 'addresses'])->name('customer.addresses');
+        Route::get('/orders', [FrontendCustomerController::class, 'orders'])->name('customer.orders');
 
-        Route::get('/checkout/{order_id}/cancelled', [PaymentController::class, 'cancelled'])->name('checkout.cancel');
-        Route::get('/checkout/{order_id}/completed', [PaymentController::class, 'completed'])->name('checkout.complete');
-        Route::get('/checkout/webhook/{order?}/{env?}', [PaymentController::class, 'webhook'])->name('checkout.webhook.ipn');
+Route::group(['middleware'=>'check_cart'],function (){
+    Route::get('/checkout',[PaymentController::class ,'checkout'])->name('frontend.checkout');
+    Route::post('/checkout/payment', [PaymentController::class, 'checkout_now'])->name('checkout.payment');
+    Route::get('/checkout/{order_id}/cancelled', [PaymentController::class, 'cancelled'])->name('checkout.cancel');
+    Route::get('/checkout/{order_id}/completed', [PaymentController::class, 'completed'])->name('checkout.complete');
+    Route::get('/checkout/webhook/{order?}/{env?}', [PaymentController::class, 'webhook'])->name('checkout.webhook.ipn');
+
+});
+
 });
 
 
@@ -48,6 +60,7 @@ Route::group(['prefix'=>'admin','as'=>'admin.'],function (){
     Route::group(['middleware'=>'guest'],function (){
         Route::get('/login',[BackendController::class,'login'])->name('login');
         Route::get('/forget-password',[BackendController::class,'forget_password'])->name('forget_password');
+
     });
 
     Route::group(['middleware'=>['roles','role:admin|supervisor']],function (){
@@ -69,6 +82,7 @@ Route::group(['prefix'=>'admin','as'=>'admin.'],function (){
         Route::resource('customer_addresses', CustomerAddressController::class);
         Route::post('/supervisors/remove-image', [SupervisorController::class, 'remove_image'])->name('supervisors.remove_image');
         Route::resource('supervisors', SupervisorController::class);
+        Route::resource('orders', OrderController::class);
         Route::resource('countries', CountryController::class);
         Route::get('states/get_states', [StateController::class, 'get_states'])->name('states.get_states');
         Route::resource('states', StateController::class);

@@ -64,24 +64,11 @@ class EntrustSeeder extends Seeder
 
         $customer->attachRole($customerRole);
 
+        /*
+         * Create 1000 fake users with their addresses.
+         */
 
-        for ($i = 1 ; $i <= 20 ; $i++){
-
-            $random_customer = User::create([
-                'first_name'        => $faker->firstName,
-                'last_name'         => $faker->lastName,
-                'username'          => $faker->userName,
-                'email'             => $faker->unique()->safeEmail,
-                'email_verified_at' => now(),
-                'mobile'            => '8465'.$faker->numberBetween(1000000,9999999),
-                'password'          => bcrypt('123123123'),
-                'status'            => 1,
-                'remember_token'    => Str::random(10)
-            ]);
-
-            $random_customer->attachRole($customerRole);
-
-        }
+        User::factory()->count(1000)->hasAddresses(1)->create();
 
 
         $manageMain = Permission::create([
@@ -260,6 +247,15 @@ class EntrustSeeder extends Seeder
         $displayCustomerAddresses = Permission::create(['name' => 'display_customer_addresses', 'display_name' => 'Show Address', 'route' => 'customer_addresses', 'module' => 'customer_addresses', 'as' => 'customer_addresses.show', 'icon' => null, 'parent' => $manageCustomerAddresses->id, 'parent_original' => $manageCustomerAddresses->id, 'parent_show' => $manageCustomerAddresses->id, 'sidebar_link' => '1', 'appear' => '0']);
         $updateCustomerAddresses = Permission::create(['name' => 'update_customer_addresses', 'display_name' => 'Update Address', 'route' => 'customer_addresses', 'module' => 'customer_addresses', 'as' => 'customer_addresses.edit', 'icon' => null, 'parent' => $manageCustomerAddresses->id, 'parent_original' => $manageCustomerAddresses->id, 'parent_show' => $manageCustomerAddresses->id, 'sidebar_link' => '1', 'appear' => '0']);
         $deleteCustomerAddresses = Permission::create(['name' => 'delete_customer_addresses', 'display_name' => 'Delete Address', 'route' => 'customer_addresses', 'module' => 'customer_addresses', 'as' => 'customer_addresses.destroy', 'icon' => null, 'parent' => $manageCustomerAddresses->id, 'parent_original' => $manageCustomerAddresses->id, 'parent_show' => $manageCustomerAddresses->id, 'sidebar_link' => '1', 'appear' => '0']);
+
+        #########################               ORDERS                         ###########################
+        $manageOrders = Permission::create([ 'name' => 'manage_orders', 'display_name' => 'Orders', 'route' => 'orders', 'module' => 'orders', 'as' => 'orders.index', 'icon' => 'fas fa-shopping-basket', 'parent' => '0', 'parent_original' => '0', 'appear' => '1', 'ordering' => '40', ]);
+        $manageOrders->parent_show = $manageOrders->id; $manageOrders->save();
+        $showOrders = Permission::create([ 'name' => 'show_orders', 'display_name' => 'Orders', 'route' => 'orders', 'module' => 'orders', 'as' => 'orders.index', 'icon' => 'fas fa-shopping-basket', 'parent' => $manageOrders->id, 'parent_show' => $manageOrders->id, 'parent_original' => $manageOrders->id, 'appear' => '1', 'ordering' => '0', ]);
+        $createOrders = Permission::create([ 'name' => 'create_orders', 'display_name' => 'Create Order', 'route' => 'orders/create', 'module' => 'orders', 'as' => 'orders.create', 'icon' => null, 'parent' => $manageOrders->id, 'parent_show' => $manageOrders->id, 'parent_original' => $manageOrders->id, 'appear' => '0', 'ordering' => '0',]);
+        $displayOrders = Permission::create([ 'name' => 'display_orders', 'display_name' => 'Show Order', 'route' => 'orders/{orders}', 'module' => 'orders', 'as' => 'orders.show', 'icon' => null, 'parent' => $manageOrders->id, 'parent_show' => $manageOrders->id, 'parent_original' => $manageOrders->id, 'appear' => '0', 'ordering' => '0',]);
+        $updateOrders = Permission::create([ 'name' => 'update_orders', 'display_name' => 'Update Order', 'route' => 'orders/{orders}/edit', 'module' => 'orders', 'as' => 'orders.edit', 'icon' => null, 'parent' => $manageOrders->id, 'parent_show' => $manageOrders->id, 'parent_original' => $manageOrders->id, 'appear' => '0', 'ordering' => '0', ]);
+        $destroyOrders = Permission::create([ 'name' => 'delete_orders', 'display_name' => 'Delete Order', 'route' => 'orders/{orders}', 'module' => 'orders', 'as' => 'orders.delete', 'icon' => null, 'parent' => $manageOrders->id, 'parent_show' => $manageOrders->id, 'parent_original' => $manageOrders->id, 'appear' => '0', 'ordering' => '0', ]);
 
         #########################              COUNTRIES                   ##################################
         $manageCountries = Permission::create(['name' => 'manage_countries', 'display_name' => 'Countries', 'route' => 'countries', 'module' => 'countries', 'as' => 'countries.index', 'icon' => 'fas fa-globe', 'parent' => '0', 'parent_original' => '0', 'sidebar_link' => '1', 'appear' => '1', 'ordering' => '45',]);

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Resources\General\UsersResource;
 use App\Models\Role;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -21,10 +22,10 @@ class AuthController extends Controller
 
     use GeneralTrait;
 
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login','register']]);
-    }
+//    public function __construct()
+//    {
+//        $this->middleware('auth:api', ['except' => ['login','register','verifyAccount','forgetpassword','updatepassword']]);
+//    }
 
     /**
      * API Login, on success return JWT Auth token
@@ -34,7 +35,6 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-
         // validation
 
         $rules =[
@@ -46,29 +46,42 @@ class AuthController extends Controller
 
         $validator = Validator::make($input, $rules);
 
+        $token = Auth::guard('api')->attempt($input);
+
         if($validator->fails()) {
-            $error = $validator->messages()->toJson();
-            return response()->json(['success'=> false, 'error'=> $error]);
+            $error = $validator->messages();
+            return response()->json([
+                'success'=> false,
+                'error'=> $error,
+                'token'=> $token,
+
+            ]);
+        }
+
+        $user_verify = DB::table('users')->where('email', $request->email)->value('email_verified_at');
+
+        if (!$user_verify) {
+            return response()->json(['success' => false, 'error' => 'Invalid Credentials. Please make sure you entered the right information and you have verified your email address.'], 200);
+
         }
 
         $credentials = [
             'email' => $request->email,
             'password' => $request->password,
-            'is_verified' => 1
         ];
 
         try {
-            // attempt to verify the credentials and create a token for the user
+            // attempt to verify the credentials and create a token for the     user
             if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['success' => false, 'error' => 'Invalid Credentials. Please make sure you entered the right information and you have verified your email address.'], 401);
+                return response()->json(['success' => false, 'error' => 'Invalid Credentials. Please make sure you entered the right information and you have verified your email address.'], 200);
             }
         } catch (JWTException $e) {
             // something went wrong whilst attempting to encode the token
-            return response()->json(['success' => false, 'error' => 'could_not_create_token'], 500);
+            return response()->json(['success' => false, 'error' => 'could_not_create_token'], 200);
         }
 
         // all good so return the token
-        return response()->json(['success' => true, 'data'=> [ 'token' => $token ]]);
+        return response()->json(['success' => true, 'token' => $token ]);
 
     }
 
@@ -103,7 +116,8 @@ class AuthController extends Controller
         $validator = Validator::make($input, $rules);
 
         if($validator->fails()) {
-            $error = $validator->messages()->toJson();
+
+            $error = $validator->messages();
             return response()->json(['success'=> false, 'error'=> $error]);
         }
 
@@ -119,10 +133,12 @@ class AuthController extends Controller
 
         //mail verification
         $verification_code =random_int(100000, 999999); //Generate verification code
-        DB::table('user_verifications')->insert(['user_id'=>$user->id,'token'=>$verification_code]);
+        DB::table('user_verifications')->insert(['user_id'=>$user->id,'verification_code'=>$verification_code]);
         $subject = "Please verify your email address.";
         $name = $request->username;
         $email = $request->email;
+        $token = Auth::guard('api')->attempt($input);
+
         Mail::send('email.verify', ['name' => $name, 'verification_code' => $verification_code],
             function($mail) use ($email, $name, $subject){
                 $mail->from('Halabsa@ecommerce.com',"From User/Company Name Goes Here");
@@ -131,8 +147,9 @@ class AuthController extends Controller
             });
 
         return response()->json([
-            'status' => 'success',
+            'status'  => 'success',
             'message' =>'Your account registered successfully, Please check your email to activate your account.',
+            'token'   => $token,
             'user' => $user,
 
         ]);
@@ -147,35 +164,106 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
 
-    public function verifyUser($verification_code)
-    {
-        $check = DB::table('user_verifications')->where('token',$verification_code)->first();
 
-        if(!is_null($check)){
-            $user = User::find($check->user_id);
+    public function verifyAccount(Request $request ){
 
-            if($user->is_verified == 1){
-                return response()->json([
-                    'success'=> true,
-                    'message'=> 'Account already verified..'
-                ]);
-            }
 
-            $user->update(['is_verified' => 1]);
-            DB::table('user_verifications')->where('token',$verification_code)->delete();
+        // validation
+        $rules =[
+            'email'              => 'required |email',
+            'verification_code' => 'required',
+        ];
+        $input = $request->only('email', 'verification_code');
+        $validator = Validator::make($input, $rules);
+
+        if($validator->fails()) {
+            $error = $validator->messages();
+            return response()->json([
+                'success'=> false,
+                'error'=> $error,
+            ]);
+        }
+
+        $user_id= DB::table('users')->where('email', $request->email)->value('id');
+        $check_verify = DB::table('user_verifications')->where('user_id', $user_id)->value('verification_code');
+        if($check_verify==$request->verification_code && $check_verify!=null && $user_id!=null) {
+            DB::table('users')
+                ->where('id', $user_id)  // find your user by their email
+                ->update(array('email_verified_at' => now()));  // update the record in the DB.
 
             return response()->json([
-                'success'=> true,
-                'message'=> 'You have successfully verified your email address.'
+                'message'=>'account has been verified successfully',
+                'check_verify'=>$check_verify,
+                'user_id'=>$user_id
             ]);
         }
 
         return response()->json(['success'=> false, 'error'=> "Verification code is invalid."]);
-
     }
 
 
-//    // reset password
+
+    public function forgetpassword(Request $request ){
+
+        $user_id= DB::table('users')->where('email', $request->email)->value('id');
+        if($user_id!=null){
+            $subject = "forget your password";
+            $email=$request->email;
+            Mail::send('password', ['user_id' =>$user_id ],
+                function($mail) use ( $subject,$email,$user_id){
+                    $mail->from('Halabsa@ecommerce.com');
+                    $mail->to($email);
+                    $mail->subject($subject);
+                });
+            return response()->json([
+
+                'user_id'=>$user_id,
+                'message' => 'Check Your Email',
+
+            ]);
+
+        }
+        return response()->json([
+
+            'message'=>'your email was wrong ,please try again'
+        ]);
+
+    }
+
+    public function updatePassword(Request $request, $id){
+
+        $rules =  [
+            'password' => ['string', 'min:8']
+        ];
+
+        $input = $request->only(
+            'password',
+        );
+
+        $validator = Validator::make($input, $rules);
+
+        if($validator->fails()) {
+
+            $error = $validator->messages();
+            return response()->json(['success'=> false, 'error'=> $error]);
+        }
+
+        $user= User::find($id);
+
+
+        if (!empty($request->password) && !Hash::check($request->password, $user->password)) {
+
+            $user->password = bcrypt($request->password);
+            $user->save();
+            return response()->json('success');
+        }else{
+
+            return response()->json('Error');
+        }
+
+    }
+
+      // reset password
 
     public function resetPassword(Request $request)
     {
@@ -217,16 +305,15 @@ class AuthController extends Controller
      *
      * @param Request $request
      */
-    public function logout(Request $request) {
-        $this->validate($request, ['token' => 'required']);
 
-        try {
-            JWTAuth::invalidate($request->input('token'));
-            return response()->json(['success' => true]);
-        } catch (JWTException $e) {
-            // something went wrong whilst attempting to encode the token
-            return response()->json(['success' => false, 'error' => 'Failed to logout, please try again.'], 500);
-        }
+    public function logout(Request $request) {
+
+        Auth::logout();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Successfully logged out',
+            ]);
+
     }
 
 
@@ -260,25 +347,24 @@ class AuthController extends Controller
         ]);
     }
 
-    public function me()
-    {
-        return response()->json([
-            'status' => 'success',
-            'user' => Auth::user(),
-        ]);
-    }
+    /**
+     * Get the authenticated User.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+
 
     public function refresh()
     {
         return response()->json([
             'status' => 'success',
             'user' => Auth::user(),
-            'authorisation' => [
+            'authorization' => [
                 'token' => Auth::refresh(),
                 'type' => 'bearer',
             ]
         ]);
     }
-
 
 }

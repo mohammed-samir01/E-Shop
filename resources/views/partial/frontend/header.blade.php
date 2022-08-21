@@ -47,7 +47,7 @@
                         </li>
                     @else
                         <li class="nav-item dropdown">
-{{--                            <livewire:frontend.header.notification-component />--}}
+                            <livewire:frontend.header.notification-component />
                         </li>
 
                         <li class="nav-item dropdown">
@@ -55,7 +55,7 @@
                                 {{ auth()->user()->full_name  }}
                             </a>
                             <div class="dropdown-menu mt-3" aria-labelledby="authDropdown">
-{{--                                <a href="{{ route('customer.dashboard') }}" class="dropdown-item border-0">Dashboard</a>--}}
+                                <a href="{{ route('customer.dashboard') }}" class="dropdown-item border-0">Dashboard</a>
                                 <a href="javascript:void(0);" class="dropdown-item border-0" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                                 <form action="{{ route('logout') }}" method="post" id="logout-form" class="d-none">
                                     @csrf

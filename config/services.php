@@ -31,10 +31,15 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
     'paypal' => [
-        'username'  => 'sb-clkqb19968186_api1.business.example.com',
-        'password'  => 'MPFTWNNM8KDEGS79',
-        'signature' => 'AlUQTuiqIg8w6F2jOOtO4KBNLxc6AVpJKec9F-aI2MX4iWRKfD2FxXhV',
+        'username'  => 'sb-shbvk18063048_api1.business.example.com',
+        'password'  => '5XVJX4GEM32VEUER',
+        'signature' => 'Ai9pZWO7HELsWF2nYCZXKt9ryPoRACL1H.QYdL0ZllgxD-ztnpdzJQQ0',
         'sandbox'   => true,
-    ]
+    ],
+    'facebook' => [
+        'client_id' =>'1690073798073481',
+        'client_secret' =>'db28cdbd7e375f4984270d67139d17e9',
+        'redirect' => 'https://ecommerce.test/login/facebook/callback',
+    ],
 
 ];
