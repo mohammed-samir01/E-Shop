@@ -2,6 +2,7 @@
   'backend.dashboard.chart-component' => 'App\\Http\\Livewire\\Backend\\Dashboard\\ChartComponent',
   'backend.dashboard.statistics-component' => 'App\\Http\\Livewire\\Backend\\Dashboard\\StatisticsComponent',
   'backend.navbar.notification-component' => 'App\\Http\\Livewire\\Backend\\Navbar\\NotificationComponent',
+  'chat-messages' => 'App\\Http\\Livewire\\ChatMessages',
   'frontend.cart-item-component' => 'App\\Http\\Livewire\\Frontend\\CartItemComponent',
   'frontend.cart-total-component' => 'App\\Http\\Livewire\\Frontend\\CartTotalComponent',
   'frontend.carts' => 'App\\Http\\Livewire\\Frontend\\Carts',
@@ -16,4 +17,6 @@
   'frontend.shop-products-tag-component' => 'App\\Http\\Livewire\\Frontend\\ShopProductsTagComponent',
   'frontend.show-product-component' => 'App\\Http\\Livewire\\Frontend\\ShowProductComponent',
   'frontend.wish-list-item-component' => 'App\\Http\\Livewire\\Frontend\\WishListItemComponent',
+  'lastmessage' => 'App\\Http\\Livewire\\Lastmessage',
+  'showchats' => 'App\\Http\\Livewire\\Showchats',
 );

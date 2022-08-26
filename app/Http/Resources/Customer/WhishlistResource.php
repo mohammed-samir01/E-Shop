@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Customer;
 
-use App\Http\Resources\General\MediaResource;
 use App\Models\Media;
 use App\Models\Product;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CartResource extends JsonResource
+class WhishlistResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,13 +18,10 @@ class CartResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'product' => Product::where('id',$this->product_id)->get('name'),
-            'user_id' => $this->user_id,
-            'product_id' => $this->product_id,
+            'product' => $this->name,
             'quantity' => $this->quantity,
             'price' => $this->price,
-            'total' => $this->total,
-            'image' => Media::where('mediable_id',$this->product_id)->get('file_name')->first(),
+            'image' => Media::where('mediable_id',$this->id)->get('file_name')->first(),
         ];
     }
 }
