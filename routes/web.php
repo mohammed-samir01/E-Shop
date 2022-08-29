@@ -93,18 +93,6 @@ Route::group(['prefix'=>'admin','as'=>'admin.'],function (){
         Route::resource('shipping_companies',ShippingCompanyController::class);
         Route::resource('payment_methods',PaymentMethodController::class);
 
-    ######################################### Chat ###################################################################
-        Route::get('messages/{id}',[ChatController::class,'getmessages'])->name('messages');
-        Route::get('chat',[ChatController::class,'adminrender']);
-
     });
 
 });
-
-
-
-############################################# Stripe Payment ###########################################################
-
-Route::get('stripe',[StripePaymentController::class,'stripe']);
-Route::post('stripe',[StripePaymentController::class,'stripePost'])->name('stripe.post');
-############################################# End Stripe Payment #######################################################
