@@ -17,11 +17,7 @@ use App\Traits\GeneralTrait;
 class RegisterController extends Controller
 {
 
-    use GeneralTrait;
-
-
     use RegistersUsers;
-
 
     protected $redirectTo = RouteServiceProvider::HOME;
 

@@ -25,7 +25,7 @@
 
             @empty
                 <p>No addresses found</p>
-                <a href="#">Add an address</a>
+                <a href="{{route('customer.addresses')}}">Add an address</a>
             @endforelse
         </div>
 
