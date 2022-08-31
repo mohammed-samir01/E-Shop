@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -12,7 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Mindscms\Entrust\Traits\EntrustUserWithPermissionsTrait;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
-class User extends Authenticatable implements MustVerifyEmail , JWTSubject
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, SearchableTrait,HasFactory, Notifiable,EntrustUserWithPermissionsTrait;
 

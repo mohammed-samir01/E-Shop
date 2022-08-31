@@ -1,10 +1,10 @@
 <?php return array (
   'app' => 
   array (
-    'name' => 'Ecommerce',
+    'name' => 'E-Shop',
     'env' => 'local',
-    'debug' => true,
-    'url' => 'https://ecommerce.test',
+    'debug' => false,
+    'url' => 'https://e-shop.test',
     'asset_url' => NULL,
     'timezone' => 'UTC',
     'locale' => 'en',
@@ -218,7 +218,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\xampp\\htdocs\\Ecommerce_Online\\storage\\framework/cache/data',
+        'path' => 'C:\\xampp\\htdocs\\e-shop\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -262,7 +262,7 @@
         'driver' => 'octane',
       ),
     ),
-    'prefix' => 'ecommerce_cache_',
+    'prefix' => 'e_shop_cache_',
   ),
   'cart' => 
   array (
@@ -317,7 +317,7 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
-        'database' => 'ecommerce',
+        'database' => 'e-shop',
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
@@ -327,7 +327,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'ecommerce',
+        'database' => 'e-shop',
         'username' => 'root',
         'password' => '',
         'unix_socket' => '',
@@ -347,7 +347,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'ecommerce',
+        'database' => 'e-shop',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -362,7 +362,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'ecommerce',
+        'database' => 'e-shop',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -377,7 +377,7 @@
       'options' => 
       array (
         'cluster' => 'redis',
-        'prefix' => 'ecommerce_database_',
+        'prefix' => 'e_shop_database_',
       ),
       'default' => 
       array (
@@ -411,7 +411,7 @@
     array (
       'enabled' => true,
       'driver' => 'file',
-      'path' => 'C:\\xampp\\htdocs\\Ecommerce_Online\\storage\\debugbar',
+      'path' => 'C:\\xampp\\htdocs\\e-shop\\storage\\debugbar',
       'connection' => NULL,
       'provider' => '',
       'hostname' => '127.0.0.1',
@@ -525,14 +525,14 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\Ecommerce_Online\\storage\\app',
+        'root' => 'C:\\xampp\\htdocs\\e-shop\\storage\\app',
         'throw' => false,
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\Ecommerce_Online\\storage\\app/public',
-        'url' => 'https://ecommerce.test/storage',
+        'root' => 'C:\\xampp\\htdocs\\e-shop\\storage\\app/public',
+        'url' => 'https://e-shop.test/storage',
         'visibility' => 'public',
         'throw' => false,
       ),
@@ -551,7 +551,7 @@
     ),
     'links' => 
     array (
-      'C:\\xampp\\htdocs\\Ecommerce_Online\\public\\storage' => 'C:\\xampp\\htdocs\\Ecommerce_Online\\storage\\app/public',
+      'C:\\xampp\\htdocs\\e-shop\\public\\storage' => 'C:\\xampp\\htdocs\\e-shop\\storage\\app/public',
     ),
   ),
   'flare' => 
@@ -640,8 +640,8 @@
     'ignored_solution_providers' => 
     array (
     ),
-    'enable_runnable_solutions' => true,
-    'remote_sites_path' => 'C:\\xampp\\htdocs\\Ecommerce_Online',
+    'enable_runnable_solutions' => false,
+    'remote_sites_path' => 'C:\\xampp\\htdocs\\e-shop',
     'local_sites_path' => '',
     'housekeeping_endpoint_prefix' => '_ignition',
     'settings_file_path' => '',
@@ -655,8 +655,8 @@
     'route' => NULL,
     'paths' => 
     array (
-      0 => 'C:\\xampp\\htdocs\\Ecommerce_Online\\public\\upload',
-      1 => 'C:\\xampp\\htdocs\\Ecommerce_Online\\public\\images',
+      0 => 'C:\\xampp\\htdocs\\e-shop\\public\\upload',
+      1 => 'C:\\xampp\\htdocs\\e-shop\\public\\images',
     ),
     'templates' => 
     array (
@@ -666,47 +666,10 @@
     ),
     'lifetime' => 43200,
   ),
-  'jwt' => 
-  array (
-    'secret' => NULL,
-    'keys' => 
-    array (
-      'public' => NULL,
-      'private' => NULL,
-      'passphrase' => NULL,
-    ),
-    'ttl' => 600,
-    'refresh_ttl' => 20160,
-    'algo' => 'HS256',
-    'required_claims' => 
-    array (
-      0 => 'iss',
-      1 => 'iat',
-      2 => 'exp',
-      3 => 'nbf',
-      4 => 'sub',
-      5 => 'jti',
-    ),
-    'persistent_claims' => 
-    array (
-    ),
-    'lock_subject' => true,
-    'leeway' => 0,
-    'blacklist_enabled' => true,
-    'blacklist_grace_period' => 0,
-    'show_black_list_exception' => 0,
-    'decrypt_cookies' => false,
-    'providers' => 
-    array (
-      'jwt' => 'PHPOpenSourceSaver\\JWTAuth\\Providers\\JWT\\Lcobucci',
-      'auth' => 'PHPOpenSourceSaver\\JWTAuth\\Providers\\Auth\\Illuminate',
-      'storage' => 'PHPOpenSourceSaver\\JWTAuth\\Providers\\Storage\\Illuminate',
-    ),
-  ),
   'livewire' => 
   array (
     'class_namespace' => 'App\\Http\\Livewire',
-    'view_path' => 'C:\\xampp\\htdocs\\Ecommerce_Online\\resources\\views/livewire',
+    'view_path' => 'C:\\xampp\\htdocs\\e-shop\\resources\\views/livewire',
     'layout' => 'layouts.app',
     'asset_url' => NULL,
     'app_url' => NULL,
@@ -790,13 +753,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\xampp\\htdocs\\Ecommerce_Online\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\e-shop\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\xampp\\htdocs\\Ecommerce_Online\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\e-shop\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -848,7 +811,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'C:\\xampp\\htdocs\\Ecommerce_Online\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\e-shop\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -907,14 +870,14 @@
     'from' => 
     array (
       'address' => 'Hooksha@ecommerce.com',
-      'name' => 'Ecommerce',
+      'name' => 'E-Shop',
     ),
     'markdown' => 
     array (
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\xampp\\htdocs\\Ecommerce_Online\\resources\\views/vendor/mail',
+        0 => 'C:\\xampp\\htdocs\\e-shop\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -953,7 +916,7 @@
     'keywords' => '',
     'creator' => 'Laravel Pdf',
     'display_mode' => 'fullpage',
-    'tempDir' => 'C:\\xampp\\htdocs\\Ecommerce_Online\\../temp/',
+    'tempDir' => 'C:\\xampp\\htdocs\\e-shop\\../temp/',
     'pdf_a' => false,
     'pdf_a_auto' => false,
     'icc_profile_path' => '',
@@ -971,7 +934,7 @@
     'show_watermark' => false,
     'watermark_font' => 'sans-serif',
     'watermark_text_alpha' => 0.1,
-    'custom_font_dir' => 'C:\\xampp\\htdocs\\Ecommerce_Online\\public/fonts/',
+    'custom_font_dir' => 'C:\\xampp\\htdocs\\e-shop\\public/fonts/',
     'custom_font_data' => 
     array (
       'almarai' => 
@@ -985,7 +948,7 @@
       ),
     ),
     'auto_language_detection' => false,
-    'temp_dir' => 'C:\\xampp\\htdocs\\Ecommerce_Online\\storage/app/pdf/',
+    'temp_dir' => 'C:\\xampp\\htdocs\\e-shop\\storage/app/pdf/',
     'pdfa' => false,
     'pdfaauto' => false,
     'use_active_forms' => false,
@@ -1053,7 +1016,7 @@
       2 => '127.0.0.1',
       3 => '127.0.0.1:8000',
       4 => '::1',
-      5 => 'ecommerce.test',
+      5 => 'e-shop.test',
     ),
     'guard' => 
     array (
@@ -1109,7 +1072,7 @@
     'lifetime' => '360',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\xampp\\htdocs\\Ecommerce_Online\\storage\\framework/sessions',
+    'files' => 'C:\\xampp\\htdocs\\e-shop\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -1118,7 +1081,7 @@
       0 => 2,
       1 => 100,
     ),
-    'cookie' => 'ecommerce_session',
+    'cookie' => 'e_shop_session',
     'path' => '/',
     'domain' => NULL,
     'secure' => NULL,
@@ -1206,9 +1169,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\xampp\\htdocs\\Ecommerce_Online\\resources\\views',
+      0 => 'C:\\xampp\\htdocs\\e-shop\\resources\\views',
     ),
-    'compiled' => 'C:\\xampp\\htdocs\\Ecommerce_Online\\storage\\framework\\views',
+    'compiled' => 'C:\\xampp\\htdocs\\e-shop\\storage\\framework\\views',
   ),
   'websockets' => 
   array (
@@ -1221,7 +1184,7 @@
       0 => 
       array (
         'id' => 'ecommerceId',
-        'name' => 'Ecommerce',
+        'name' => 'E-Shop',
         'key' => 'ecommerceKey',
         'secret' => 'ecommerceSecret',
         'path' => NULL,
@@ -1251,8 +1214,8 @@
     ),
     'ssl' => 
     array (
-      'local_cert' => 'C:\\xampp\\apache\\crt\\ecommerce.test\\server.crt',
-      'local_pk' => 'C:\\xampp\\apache\\crt\\ecommerce.test\\server.key',
+      'local_cert' => 'C:\\xampp\\apache\\crt\\e-shop.test\\server.crt',
+      'local_pk' => 'C:\\xampp\\apache\\crt\\e-shop.test\\server.key',
       'passphrase' => NULL,
       'verify_peer' => false,
       'verify_peer_name' => false,

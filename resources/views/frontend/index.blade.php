@@ -6,7 +6,7 @@
                 <div class="col-lg-6">
                     <p class="text-muted small text-uppercase mb-2">New Inspiration 2020</p>
                     <h1 class="h2 text-uppercase mb-3">20% off on new season</h1>
-                    <a class="btn btn-dark" href="shop.blade.php">Browse collections</a>
+                    <a class="btn btn-dark" href="{{ route('frontend.shop') }}">Browse collections</a>
                 </div>
             </div>
         </div>
@@ -104,11 +104,11 @@
                 <div class="col-lg-6">
                     <form action="#">
                         <div class="input-group flex-column flex-sm-row mb-3">
-                            <input class="form-control form-control-lg py-3" type="email"
-                                   placeholder="Enter your email address" aria-describedby="button-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-dark btn-block" id="button-addon2" type="submit">Subscribe
-                                </button>
+                            <div class="col-6 col-lg-9">
+                                <input class=" form-control form-control-lg py-3" type="email" placeholder="Enter your email address" aria-describedby="button-addon2">
+                            </div>
+                            <div class="input-group-append col-6 col-lg-3">
+                                <button class="btn btn-dark btn-block" id="button-addon2" type="submit">Subscribe</button>
                             </div>
                         </div>
                     </form>
