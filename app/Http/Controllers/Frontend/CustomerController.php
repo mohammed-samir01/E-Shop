@@ -12,8 +12,6 @@ use Intervention\Image\Facades\Image;
 
 class CustomerController extends Controller
 {
-
-
     public function dashboard()
     {
         return view('frontend.customer.index');
@@ -55,7 +53,6 @@ class CustomerController extends Controller
 
         toast('Profile updated', 'success');
         return back();
-
     }
 
     public function remove_profile_image()

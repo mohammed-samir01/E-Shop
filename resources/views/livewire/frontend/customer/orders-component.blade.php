@@ -51,6 +51,7 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @if (isset($order))
                     @foreach($order->products as $product)
                         <tr>
                             <td>{{ $product->name }}</td>
@@ -92,7 +93,7 @@
                     <tr>
                         <th class="border-0" scope="col"><strong class="text-small text-uppercase">Transaction</strong></th>
                         <th class="border-0" scope="col"><strong class="text-small text-uppercase">Date</strong></th>
-{{--                        <th class="border-0" scope="col"><strong class="text-small text-uppercase">Days</strong></th>--}}
+                        {{--<th class="border-0" scope="col"><strong class="text-small text-uppercase">Days</strong></th>--}}
                         <th></th>
                     </tr>
                     </thead>
@@ -101,7 +102,7 @@
                         <tr>
                             <td>{{ $transaction->status($transaction->transaction) }}</td>
                             <td>{{ $transaction->created_at->format('Y-m-d') }}</td>
-{{--                            <td>{{ \Carbon\Carbon::now()->addDays(5)->diffInDays($transaction->created_at->format('Y-m-d')) }}</td>--}}
+                            {{--<td>{{ \Carbon\Carbon::now()->addDays(5)->diffInDays($transaction->created_at->format('Y-m-d')) }}</td>--}}
                             <td>
                                 @if ($loop->last && $transaction->transaction == \App\Models\OrderTransaction::FINISHED &&
                                     \Carbon\Carbon::now()->addDays(5)->diffInDays($transaction->created_at->format('Y-m-d')) != 0)
@@ -113,7 +114,7 @@
                             </td>
                         </tr>
                     @endforeach
-
+                    @endif
                     </tbody>
                 </table>
             </div>

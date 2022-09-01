@@ -148,9 +148,13 @@ class SupervisorController extends Controller
             return redirect('admin/index');
         }
 
-        if (File::exists('assets/users/'. $supervisor->user_image)){
+        if ($supervisor->user_image != null && File::exists('assets/users/'. $supervisor->user_image)){
             unlink('assets/users/'. $supervisor->user_image);
         }
+//        if (File::exists('assets/users/'. $supervisor->user_image)){
+//
+//            unlink('assets/users/'. $supervisor->user_image);
+//        }
         $supervisor->delete();
 
         return redirect()->route('admin.supervisors.index')->with([

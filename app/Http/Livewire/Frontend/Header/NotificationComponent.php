@@ -2,10 +2,13 @@
 
 namespace App\Http\Livewire\Frontend\Header;
 
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class NotificationComponent extends Component
 {
+    use LivewireAlert;
+
 
     public $unReadNotificationsCount = '';
     public $unReadNotifications;
