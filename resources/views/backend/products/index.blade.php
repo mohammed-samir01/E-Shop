@@ -38,7 +38,7 @@
                             @if ($product->firstMedia)
                                 <img src="{{ asset('assets/products/' . $product->firstMedia->file_name) }}" width="60" height="60" alt="{{ $product->name }}">
                             @else
-                                <img src="{{ asset('assets/no-image.png') }}" width="60" height="60" alt="{{ $product->name }}">
+                                <img src="{{ asset('assets/no-image.jpg') }}" width="60" height="60" alt="{{ $product->name }}">
                             @endif
                         </td>
                         <td>{{ $product->name }}</td>

@@ -1063,7 +1063,7 @@
     ),
     'stripe' => 
     array (
-      'secret' => 'sk_test_51La7E7B9GkfhMowZWtqHHkhCuskKys9twfxDWPSkkYiXzAH5P0dqXOdANVNwIqW8nrVRb0859nBqRvISiysicvhO00A3VrJ6XT',
+      'secret' => NULL,
     ),
   ),
   'session' => 
