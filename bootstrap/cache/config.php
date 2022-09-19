@@ -156,22 +156,17 @@
       'pusher' => 
       array (
         'driver' => 'pusher',
-        'key' => 'ecommerceKey',
-        'secret' => 'ecommerceSecret',
-        'app_id' => 'ecommerceId',
+        'key' => 'e-shopKey',
+        'secret' => 'e-shopSecret',
+        'app_id' => 'e-shopId',
         'options' => 
         array (
-          'cluster' => 'eu',
+          'cluster' => 'mt1',
           'useTLS' => true,
           'encrypted' => true,
-          'host' => '127.0.0.1',
+          'host' => 'e-shop.test',
           'port' => 6001,
           'scheme' => 'https',
-          'curl_options' => 
-          array (
-            81 => 0,
-            64 => 0,
-          ),
         ),
       ),
       'ably' => 
@@ -1183,10 +1178,10 @@
     array (
       0 => 
       array (
-        'id' => 'ecommerceId',
+        'id' => 'e-shopId',
         'name' => 'E-shop',
-        'key' => 'ecommerceKey',
-        'secret' => 'ecommerceSecret',
+        'key' => 'e-shopKey',
+        'secret' => 'e-shopSecret',
         'path' => NULL,
         'capacity' => NULL,
         'enable_client_messages' => false,
@@ -1214,11 +1209,10 @@
     ),
     'ssl' => 
     array (
-      'local_cert' => 'C:\\xampp\\apache\\crt\\ecommerce.test\\server.crt',
-      'local_pk' => 'C:\\xampp\\apache\\crt\\ecommerce.test\\server.key',
+      'local_cert' => 'C:\\xampp\\apache\\crt\\e-shop.test\\server.crt',
+      'local_pk' => 'C:\\xampp\\apache\\crt\\e-shop.test\\server.key',
       'passphrase' => NULL,
       'verify_peer' => false,
-      'verify_peer_name' => false,
     ),
     'channel_manager' => 'BeyondCode\\LaravelWebSockets\\WebSockets\\Channels\\ChannelManagers\\ArrayChannelManager',
   ),

@@ -4,14 +4,11 @@ namespace App\Http\Livewire\Frontend;
 
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
-use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-
-
+use Livewire\Component;
 
 class ProductModalShared extends Component
 {
-
     use LivewireAlert;
 
     public $productModalCount = false;
@@ -68,8 +65,8 @@ class ProductModalShared extends Component
     public function showProductModalAction($slug)
     {
         $this->productModalCount = true;
-        $this->productModal = Product::withAvg('reviews', 'rating')->whereSlug($slug)->Active()->HasQuantity()->ActiveCategory()->firstOrFail();
-        // dd($this->productModal);
+         $this->productModal = Product::withAvg('reviews', 'rating')->whereSlug($slug)->Active()->HasQuantity()->ActiveCategory()->firstOrFail();
+//         dd($this->productModal);
     }
 
     public function render()

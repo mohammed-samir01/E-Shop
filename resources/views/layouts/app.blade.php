@@ -18,8 +18,6 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="{{asset('frontend/vendor/bootstrap/css/bootstrap.min.css')}}">
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Lightbox-->
     <link rel="stylesheet" href="{{ asset('frontend/vendor/lightbox2/css/lightbox.min.css') }}">
     <!-- Range slider-->
@@ -31,11 +29,11 @@
     <link rel="stylesheet" href="{{ asset('frontend/vendor/owl.carousel2/assets/owl.theme.default.css') }}">
     <!-- theme stylesheet-->
     <link rel="stylesheet" href="{{asset('frontend/css/style.default.css')}}" id="theme-stylesheet">
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     <!-- Custom stylesheet - for your changes-->
     <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
-    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
 
     <livewire:styles />
     @yield('style')
@@ -54,7 +52,6 @@
 
     </div>
 
-
     <livewire:frontend.product-modal-shared />
 
     {{--    <!-- Scripts -->--}}
@@ -63,7 +60,6 @@
     <x-livewire-alert::scripts />
     @include('sweetalert::alert')
     @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
-    <script src="{{ asset('js/app.js') }}"></script>
     <!-- JavaScript files-->
     <script src="{{asset('frontend/vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('frontend/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>

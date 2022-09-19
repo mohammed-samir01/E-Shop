@@ -27,7 +27,7 @@
 
                         <div class="col-lg-6">
                             <button class="close p-4" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                            <div wire:ignore class="p-5 my-md-4">
+                            <div class="p-5 my-md-4">
                                 <ul class="list-inline mb-2">
                                     @if ($productModal->reviews_avg_rating != '')
                                         @for ($i = 0; $i < 5; $i++)
@@ -57,7 +57,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-5 pl-sm-0">
-                                        <a wire:click="addToCart()" class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center px-0 text-light">
+                                        <a wire:click="addToCart()" class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center px-0 text-white">
                                             Add to cart
                                         </a>
                                     </div>
@@ -69,9 +69,7 @@
                         </div>
                     </div>
                 @endif
-
             </div>
         </div>
     </div>
 </div>
-

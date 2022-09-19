@@ -124,6 +124,7 @@ class PaymentController extends Controller
 
 
             toast('Your recent payment is successful with reference code: ' . $response->getTransactionReference(), 'success');
+
             return redirect()->route('frontend.index');
         }
     }

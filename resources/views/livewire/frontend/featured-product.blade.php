@@ -47,7 +47,8 @@
                 </div>
             @empty
             @endforelse
-
         </div>
+
+
     </section>
 </div>
